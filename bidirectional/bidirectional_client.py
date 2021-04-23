@@ -1,8 +1,8 @@
 from __future__ import print_function
 
 import grpc
-import bidirectional.bidirectional_pb2_grpc as bidirectional_pb2_grpc
-import bidirectional.bidirectional_pb2 as bidirectional_pb2
+from generated import bidirectional_pb2_grpc as bidirectional_pb2_grpc
+from generated import bidirectional_pb2 as bidirectional_pb2
 
 
 def make_message(message):
@@ -16,8 +16,6 @@ def generate_messages():
         make_message("First message"),
         make_message("Second message"),
         make_message("Third message"),
-        make_message("Fourth message"),
-        make_message("Fifth message"),
     ]
     for msg in messages:
         print("Hello Server Sending you the %s" % msg.message)

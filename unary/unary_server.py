@@ -1,8 +1,8 @@
 import grpc
 from concurrent import futures
 import time
-import unary.unary_pb2_grpc as pb2_grpc
-import unary.unary_pb2 as pb2
+from generated import unary_pb2_grpc as pb2_grpc
+from generated import unary_pb2 as pb2
 
 
 class UnaryService(pb2_grpc.UnaryServicer):
@@ -15,7 +15,7 @@ class UnaryService(pb2_grpc.UnaryServicer):
         # get the string from the incoming request
         message = request.message
         result = f'Hello I am up and running received "{message}" message from you'
-        result = {'message': result, 'received': True}
+        result = {'message': result}
 
         return pb2.MessageResponse(**result)
 
