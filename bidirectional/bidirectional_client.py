@@ -4,18 +4,11 @@ import grpc
 from generated import bidirectional_pb2_grpc as bidirectional_pb2_grpc
 from generated import bidirectional_pb2 as bidirectional_pb2
 
-
-def make_message(message):
-    return bidirectional_pb2.Message(
-        message=message
-    )
-
-
 def generate_messages():
     messages = [
-        make_message("First message"),
-        make_message("Second message"),
-        make_message("Third message"),
+        bidirectional_pb2.Message("First message"),
+        bidirectional_pb2.Message("Second message"),
+        bidirectional_pb2.Message("Third message"),
     ]
     for msg in messages:
         print("Hello Server Sending you the %s" % msg.message)
