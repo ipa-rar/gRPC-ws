@@ -15,13 +15,7 @@ class DataBrokerServicer(Server.DataBrokerServicer):
         response = msg.Features()
         total_rows = row_obj.init_count()
         current_row = row_obj.current_row
-        if current_row % total_rows == 0 and current_row != 0:
-            response.id = float(0)
-            response.sensor1 = float(0)
-            response.sensor2 = float(0)
-            response.sensor3 = float(0)
-            response.sensor4 = float(0)
-        else:
+        if(row_obj.current_row < total_rows):
             row = row_obj.get_next_row(current_row)
             response.id = row[0]
             response.sensor1 = row[1]
@@ -29,6 +23,7 @@ class DataBrokerServicer(Server.DataBrokerServicer):
             response.sensor3 = row[3]
             response.sensor4 = row[4]
             row_obj.current_row = row_obj.current_row + 1
+
         return response
 
 
