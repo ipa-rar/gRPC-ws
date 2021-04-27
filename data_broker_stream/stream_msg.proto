@@ -10,7 +10,6 @@ message Features {
 }
 message Empty{}
 
-//Define the service
 service StreamDataBroker{
     rpc StreamDataBroker(stream Empty) returns(stream Features);
 }

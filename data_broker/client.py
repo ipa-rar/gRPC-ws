@@ -7,14 +7,26 @@ from google.protobuf import empty_pb2
 
 port = 'localhost:50051'
 
-def main(port):
-    with grpc.insecure_channel(port) as channel:
-        stub = Client.DataBrokerStub(channel)
+class DataBrokerStub():
+    
+    def __init__(self):
+        self.port = 'localhost:50051'
+        self.channel = grpc.insecure_channel(self.port)
+        self.stub = Client.DataBrokerStub(self.channel)
+        self.request = empty_pb2.Empty()
 
-        request = empty_pb2.Empty()
-        rows = stub.DataBroker(request)
-        
-        print(rows)
+    def send_request(self):
+        rows = self.stub.DataBroker(self.request)
+        return rows
+         
+def main():
+    client = DataBrokerStub()
+    server_reply = client.send_request()
+    print(server_reply)
 
-if __name__ == '__main__':
-    main(port = 'localhost:50051')
+if __name__=='__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Interrupted!")
+        exit(0)

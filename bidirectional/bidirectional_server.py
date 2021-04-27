@@ -1,23 +1,26 @@
 from concurrent import futures
-
 import grpc
-from generated import bidirectional_pb2_grpc as bidirectional_pb2_grpc
 
+from generated import bidirectional_pb2_grpc as Server
+port='[::]:50051'
 
-class BidirectionalService(bidirectional_pb2_grpc.BidirectionalServicer):
+class BidirectionalService(Server.BidirectionalServicer):
 
     def GetServerResponse(self, request_iterator, context):
         for message in request_iterator:
             yield message
 
-
-def serve():
+def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    bidirectional_pb2_grpc.add_BidirectionalServicer_to_server(BidirectionalService(), server)
-    server.add_insecure_port('[::]:50051')
+    Server.add_BidirectionalServicer_to_server(BidirectionalService(), server)
+    server.add_insecure_port(port)
+    print("Starting server. Listening on port : " + str(port))
     server.start()
     server.wait_for_termination()
 
-
 if __name__ == '__main__':
-    serve()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Interrupted!")
+        exit(0)
