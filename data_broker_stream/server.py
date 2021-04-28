@@ -1,8 +1,9 @@
-from generated import stream_msg_pb2_grpc as Server
-from generated import stream_msg_pb2 as msg
-
+import time
 import grpc
 from concurrent import futures
+
+from generated import stream_msg_pb2_grpc as Server
+from generated import stream_msg_pb2 as msg
 port = 50051
 
 import fetch_csv as f
@@ -11,27 +12,20 @@ current_row = 0
 
 class StreamDataBrokerServicer(Server.StreamDataBrokerServicer):
     
-    def fetch_csv(self):
-        with open(csv_filename, "r", encoding="latin-1") as dataset:
-            for data in csv.reader(dataset):
-                yield data
-            
-    def StreamDataBroker(self, requests, context):
-        #csv_filename = "./dataset/sensors.csv"
+    def StreamDataBroker(self, request, context):
         response = msg.Features()
-        for request in requests:
-            print("server running")
+        if request:
             total_rows = row_obj.init_count()
             current_row = row_obj.current_row
-            row = row_obj.get_next_row(current_row)
-            response.id = row[0]
-            response.sensor1 = row[1]
-            response.sensor2 = row[2]
-            response.sensor3 = row[3]
-            response.sensor4 = row[4]
-            row_obj.current_row = row_obj.current_row + 1
-
-            yield response
+            for row_obj.current_row in range(total_rows):
+                row = row_obj.get_next_row(row_obj.current_row)
+                response.id = row[0]
+                response.sensor1 = row[1]
+                response.sensor2 = row[2]
+                response.sensor3 = row[3]
+                response.sensor4 = row[4]
+                yield response
+                time.sleep(0.1)
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

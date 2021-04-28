@@ -1,5 +1,6 @@
 import grpc
 from concurrent import futures
+import time
 
 from generated import msg_pb2_grpc as Server
 from generated import msg_pb2 as msg
@@ -11,20 +12,21 @@ current_row = 0
 port = 50051
 
 class DataBrokerServicer(Server.DataBrokerServicer):
+    
     def DataBroker(self, request, context):
         response = msg.Features()
-        total_rows = row_obj.init_count()
-        current_row = row_obj.current_row
-        if(row_obj.current_row < total_rows):
-            row = row_obj.get_next_row(current_row)
-            response.id = row[0]
-            response.sensor1 = row[1]
-            response.sensor2 = row[2]
-            response.sensor3 = row[3]
-            response.sensor4 = row[4]
-            row_obj.current_row = row_obj.current_row + 1
-
-        return response
+        if request:
+            total_rows = row_obj.init_count()
+            current_row = row_obj.current_row
+            for row_obj.current_row in range(total_rows):
+                row = row_obj.get_next_row(row_obj.current_row)
+                response.id = row[0]
+                response.sensor1 = row[1]
+                response.sensor2 = row[2]
+                response.sensor3 = row[3]
+                response.sensor4 = row[4]
+                yield response
+                time.sleep(0.1)
 
 
 def main():

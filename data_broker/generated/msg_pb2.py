@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\tmsg.proto\"Z\n\x08\x46\x65\x61tures\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07sensor1\x18\x02 \x01(\x02\x12\x0f\n\x07sensor2\x18\x03 \x01(\x02\x12\x0f\n\x07sensor3\x18\x04 \x01(\x02\x12\x0f\n\x07sensor4\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty2-\n\nDataBroker\x12\x1f\n\nDataBroker\x12\x06.Empty\x1a\t.Featuresb\x06proto3'
+  serialized_pb=b'\n\tmsg.proto\"Z\n\x08\x46\x65\x61tures\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07sensor1\x18\x02 \x01(\x02\x12\x0f\n\x07sensor2\x18\x03 \x01(\x02\x12\x0f\n\x07sensor3\x18\x04 \x01(\x02\x12\x0f\n\x07sensor4\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty2/\n\nDataBroker\x12!\n\nDataBroker\x12\x06.Empty\x1a\t.Features0\x01\x62\x06proto3'
 )
 
 
@@ -137,7 +137,7 @@ _DATABROKER = _descriptor.ServiceDescriptor(
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
   serialized_start=114,
-  serialized_end=159,
+  serialized_end=161,
   methods=[
   _descriptor.MethodDescriptor(
     name='DataBroker',

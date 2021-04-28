@@ -15,15 +15,15 @@ class DataBrokerStub():
         self.stub = Client.DataBrokerStub(self.channel)
         self.request = empty_pb2.Empty()
 
-    def send_request(self):
+    def stream_request(self):
         rows = self.stub.DataBroker(self.request)
-        return rows
+        for row in rows:
+            print(row)
          
 def main():
     client = DataBrokerStub()
-    server_reply = client.send_request()
-    print(server_reply)
-
+    server_reply = client.stream_request()
+    
 if __name__=='__main__':
     try:
         main()

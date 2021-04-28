@@ -6,8 +6,7 @@ from generated import msg_pb2 as msg__pb2
 
 
 class DataBrokerStub(object):
-    """Define the service
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
         """Constructor.
@@ -15,7 +14,7 @@ class DataBrokerStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.DataBroker = channel.unary_unary(
+        self.DataBroker = channel.unary_stream(
                 '/DataBroker/DataBroker',
                 request_serializer=msg__pb2.Empty.SerializeToString,
                 response_deserializer=msg__pb2.Features.FromString,
@@ -23,8 +22,7 @@ class DataBrokerStub(object):
 
 
 class DataBrokerServicer(object):
-    """Define the service
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def DataBroker(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -35,7 +33,7 @@ class DataBrokerServicer(object):
 
 def add_DataBrokerServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'DataBroker': grpc.unary_unary_rpc_method_handler(
+            'DataBroker': grpc.unary_stream_rpc_method_handler(
                     servicer.DataBroker,
                     request_deserializer=msg__pb2.Empty.FromString,
                     response_serializer=msg__pb2.Features.SerializeToString,
@@ -48,8 +46,7 @@ def add_DataBrokerServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class DataBroker(object):
-    """Define the service
-    """
+    """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def DataBroker(request,
@@ -62,7 +59,7 @@ class DataBroker(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/DataBroker/DataBroker',
+        return grpc.experimental.unary_stream(request, target, '/DataBroker/DataBroker',
             msg__pb2.Empty.SerializeToString,
             msg__pb2.Features.FromString,
             options, channel_credentials,

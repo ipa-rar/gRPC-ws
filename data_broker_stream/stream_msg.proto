@@ -11,5 +11,5 @@ message Features {
 message Empty{}
 
 service StreamDataBroker{
-    rpc StreamDataBroker(stream Empty) returns(stream Features);
+    rpc StreamDataBroker( Empty) returns(stream Features);
 }

@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from generated import stream_msg_pb2 as stream__msg__pb2
+from generated import broker_pb2 as broker__pb2
 
 
-class StreamDataBrokerStub(object):
+class BrokerServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,42 +14,42 @@ class StreamDataBrokerStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.StreamDataBroker = channel.unary_stream(
-                '/StreamDataBroker/StreamDataBroker',
-                request_serializer=stream__msg__pb2.Empty.SerializeToString,
-                response_deserializer=stream__msg__pb2.Features.FromString,
+        self.BidirectionalStreaming = channel.stream_stream(
+                '/bidirectional_databroker.BrokerService/BidirectionalStreaming',
+                request_serializer=broker__pb2.BrokerRequest.SerializeToString,
+                response_deserializer=broker__pb2.BrokerResponse.FromString,
                 )
 
 
-class StreamDataBrokerServicer(object):
+class BrokerServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def StreamDataBroker(self, request, context):
+    def BidirectionalStreaming(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_StreamDataBrokerServicer_to_server(servicer, server):
+def add_BrokerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'StreamDataBroker': grpc.unary_stream_rpc_method_handler(
-                    servicer.StreamDataBroker,
-                    request_deserializer=stream__msg__pb2.Empty.FromString,
-                    response_serializer=stream__msg__pb2.Features.SerializeToString,
+            'BidirectionalStreaming': grpc.stream_stream_rpc_method_handler(
+                    servicer.BidirectionalStreaming,
+                    request_deserializer=broker__pb2.BrokerRequest.FromString,
+                    response_serializer=broker__pb2.BrokerResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'StreamDataBroker', rpc_method_handlers)
+            'bidirectional_databroker.BrokerService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class StreamDataBroker(object):
+class BrokerService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def StreamDataBroker(request,
+    def BidirectionalStreaming(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,8 @@ class StreamDataBroker(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/StreamDataBroker/StreamDataBroker',
-            stream__msg__pb2.Empty.SerializeToString,
-            stream__msg__pb2.Features.FromString,
+        return grpc.experimental.stream_stream(request_iterator, target, '/bidirectional_databroker.BrokerService/BidirectionalStreaming',
+            broker__pb2.BrokerRequest.SerializeToString,
+            broker__pb2.BrokerResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

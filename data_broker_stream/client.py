@@ -10,12 +10,12 @@ class StreamDataBrokerStub():
         self.port = 'localhost:50051'
         self.channel = grpc.insecure_channel(self.port)
         self.stub = Client.StreamDataBrokerStub(self.channel)
+        self.request = empty_pb2.Empty()
 
     def send_request_stream(self):
-        request = empty_pb2.Empty()
-        responses = self.stub.StreamDataBroker(request)
-        for response in responses:
-            print(response)
+        rows = self.stub.StreamDataBroker(self.request)
+        for row in rows:
+            print(row)
 
 def main():
     client = StreamDataBrokerStub()
