@@ -7,4 +7,4 @@
     ````
 3. Enter the name of the proto file you have created in step 1.
 4. Now, you have all the files to get started with the gRPC project.
-### Test it with the `template.proto`
+## Note: This script works perfectly when proto file names that does not contain `space`, `_` and `-`
