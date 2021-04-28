@@ -19,18 +19,19 @@ class StreamDataBrokerServicer(Server.StreamDataBrokerServicer):
     def StreamDataBroker(self, requests, context):
         #csv_filename = "./dataset/sensors.csv"
         response = msg.Features()
+        for request in requests:
+            print("server running")
+            total_rows = row_obj.init_count()
+            current_row = row_obj.current_row
+            row = row_obj.get_next_row(current_row)
+            response.id = row[0]
+            response.sensor1 = row[1]
+            response.sensor2 = row[2]
+            response.sensor3 = row[3]
+            response.sensor4 = row[4]
+            row_obj.current_row = row_obj.current_row + 1
 
-        total_rows = row_obj.init_count()
-        current_row = row_obj.current_row
-        row = row_obj.get_next_row(current_row)
-        response.id = row[0]
-        response.sensor1 = row[1]
-        response.sensor2 = row[2]
-        response.sensor3 = row[3]
-        response.sensor4 = row[4]
-        row_obj.current_row = row_obj.current_row + 1
-        
-        yield response
+            yield response
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

@@ -15,14 +15,12 @@ class StreamDataBrokerStub():
         request = empty_pb2.Empty()
         responses = self.stub.StreamDataBroker(request)
         for response in responses:
-            yield response
-        
-    
+            print(response)
+
 def main():
     client = StreamDataBrokerStub()
-    server_result = client.send_request_stream()
-    for r in server_result:
-        print(r)
+    client.send_request_stream()
+
 
 if __name__=='__main__':
     try:

@@ -1,6 +1,6 @@
-//Define the used version of proto
+
 syntax = "proto3";
-//response to client
+
 message Features {
     int32 id = 1;
     float sensor1 = 2 ;
