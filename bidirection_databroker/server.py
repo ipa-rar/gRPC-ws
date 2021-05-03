@@ -4,7 +4,7 @@ from threading import Thread
 
 from generated import broker_pb2 as msg
 from generated import broker_pb2_grpc as Server
-port = 50051
+port = 8061
 
 class BrokerServiceServicer(Server.BrokerServiceServicer):
 

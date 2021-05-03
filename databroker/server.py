@@ -9,24 +9,23 @@ from data_broker import fetch_csv
 
 row_obj = fetch_csv.FetchRowCSV()
 current_row = 0
-port = 50051
+port = 8061
 
 class DataBrokerServicer(Server.DataBrokerServicer):
     
     def DataBroker(self, request, context):
         response = msg.Features()
-        if request:
-            total_rows = row_obj.init_count()
-            current_row = row_obj.current_row
-            for row_obj.current_row in range(total_rows):
-                row = row_obj.get_next_row(row_obj.current_row)
-                response.id = row[0]
-                response.sensor1 = row[1]
-                response.sensor2 = row[2]
-                response.sensor3 = row[3]
-                response.sensor4 = row[4]
-                yield response
-                time.sleep(0.1)
+        total_rows = row_obj.init_count()
+        current_row = row_obj.current_row
+        for row_obj.current_row in range(total_rows):
+            row = row_obj.get_next_row(row_obj.current_row)
+            response.id = row[0]
+            response.sensor1 = row[1]
+            response.sensor2 = row[2]
+            response.sensor3 = row[3]
+            response.sensor4 = row[4]
+            yield response
+            time.sleep(0.1)
 
 
 def main():

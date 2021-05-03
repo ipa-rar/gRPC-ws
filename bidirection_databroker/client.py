@@ -3,7 +3,7 @@ import time
 
 from generated import broker_pb2 as msg
 from generated import broker_pb2_grpc as Client
-port = 'localhost:50051'
+port = 'localhost:8061'
 
 def bidirectional_streaming(stub):
 
