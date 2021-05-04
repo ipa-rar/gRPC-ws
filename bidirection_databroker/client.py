@@ -1,5 +1,6 @@
 import grpc
 import time
+import csv
 
 from generated import broker_pb2 as msg
 from generated import broker_pb2_grpc as Client
@@ -8,16 +9,32 @@ port = 'localhost:8061'
 def bidirectional_streaming(stub):
 
     def request_messages():  
-        request = msg.BrokerRequest( id= 14,
-        sensor1 = 25.5697,
-        sensor2 = 34.6544,
-        sensor3 = 58.8795,
-        sensor4 = 23.5690)
-        yield request
-        time.sleep(.1)
+        for i in range(100):
+            request = msg.BrokerRequest( id= i,
+            sensor1 = i+1.06034923580252875,
+            sensor2 = i+2.06034923580252875,
+            sensor3 = i+3.06034923580252875,
+            sensor4 = i+4.06034923580252875)
+            yield request
+            time.sleep(.1)
+
+    def stream_messages():
+        csv_filename = "./dataset/sensors.csv"
+        with open(csv_filename, "r") as dataset:
+            row = csv.reader(dataset, delimiter=",")
+            for i, data in enumerate(row):
+                request = msg.BrokerRequest(id=data[0],
+                sensor1=data[1],
+                sensor2=data[2],
+                sensor3=data[3],
+                sensor4=data[4])
+                yield request
+                time.sleep(.01) 
+
     
-    response_iterator = stub.BidirectionalStreaming(request_messages())
-    
+    #response_iterator = stub.BidirectionalStreaming(request_messages())
+    response_iterator = stub.BidirectionalStreaming(stream_messages())
+
     for response in response_iterator:
         print(response.id,
         response.prediction)
@@ -35,16 +52,3 @@ if __name__=='__main__':
         exit(0)
 
         
-""" response = msg.Features()
-        total_rows = row_obj.init_count()
-        current_row = row_obj.current_row
-        if(row_obj.current_row < total_rows):
-            row = row_obj.get_next_row(current_row)
-            response.id = row[0]
-            response.sensor1 = row[1]
-            response.sensor2 = row[2]
-            response.sensor3 = row[3]
-            response.sensor4 = row[4]
-            row_obj.current_row = row_obj.current_row + 1
-
-        return response """

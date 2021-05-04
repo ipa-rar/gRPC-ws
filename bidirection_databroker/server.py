@@ -20,7 +20,9 @@ class BrokerServiceServicer(Server.BrokerServiceServicer):
     def BidirectionalStreaming(self, request_iterator, context):
         t = Thread(target=self.ProcessRequest(request_iterator))
         t.start()
+        ## apply some algorithm here on the received data
         self.ProcessRequest(request_iterator)
+
         yield msg.BrokerResponse(
             id = 15,
             prediction = True
@@ -41,19 +43,3 @@ if __name__=='__main__':
     except KeyboardInterrupt:
         print("Interrupted!")
         exit(0)
-
-    
-
-
-"""             def process_request():
-            
-
-        t = Thread(target=process_request)
-        t.start()
-
-        for i in range(10):
-            yield msg.BrokerResponse(
-                id = i,
-                prediction = True
-            )
-        t.join() """

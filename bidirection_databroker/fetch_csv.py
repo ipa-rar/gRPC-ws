@@ -26,3 +26,24 @@ class FetchRowCSV:
 
     def init_count(self):
         return self.total_rows
+
+
+""" import csv
+import time
+
+def stream_messages():
+    csv_filename = "./dataset/sensors.csv"
+    with open(csv_filename, "r", encoding="latin-1") as dataset:
+        for data in csv.reader(dataset):
+            msg = dict(id=data[0],
+            sensor1=data[1],
+            sensor2=data[2],
+            sensor3=data[3],
+            sensor4=data[4])
+            yield msg
+            time.sleep(.01)
+
+if __name__ =='__main__':
+    ans = stream_messages()
+    for data in ans:
+        print(data) """
