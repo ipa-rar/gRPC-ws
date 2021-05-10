@@ -32,8 +32,8 @@ def bidirectional_streaming(stub):
                 time.sleep(.01) 
 
     
-    #response_iterator = stub.BidirectionalStreaming(request_messages())
-    response_iterator = stub.BidirectionalStreaming(stream_messages())
+    response_iterator = stub.BidirectionalStreaming(request_messages())
+    #response_iterator = stub.BidirectionalStreaming(stream_messages())
 
     for response in response_iterator:
         print(response.id,
