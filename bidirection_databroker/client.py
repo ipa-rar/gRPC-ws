@@ -23,17 +23,17 @@ def bidirectional_streaming(stub):
         with open(csv_filename, "r") as dataset:
             row = csv.reader(dataset, delimiter=",")
             for i, data in enumerate(row):
-                request = msg.BrokerRequest(id=data[0],
-                sensor1=data[1],
-                sensor2=data[2],
-                sensor3=data[3],
-                sensor4=data[4])
+                request = msg.BrokerRequest(id=int(data[0]),
+                sensor1=float(data[1]),
+                sensor2=float(data[2]),
+                sensor3=float(data[3]),
+                sensor4=float(data[4]))
                 yield request
                 time.sleep(.01) 
 
     
-    response_iterator = stub.BidirectionalStreaming(request_messages())
-    #response_iterator = stub.BidirectionalStreaming(stream_messages())
+    # response_iterator = stub.BidirectionalStreaming(request_messages())
+    response_iterator = stub.BidirectionalStreaming(stream_messages())
 
     for response in response_iterator:
         print(response.id,
