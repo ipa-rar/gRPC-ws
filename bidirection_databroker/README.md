@@ -1,4 +1,7 @@
 # BidirectionalStreaming 
+**Expected behavior:** 
+- Client streams sensor data from 4 sensors with `id` for each measurement. The server receives the streams and do some balck box processing and then streams back the respective `id` and a prediction value. 
+- For every one measurement the client sends the server should send back one processed value without any delay. 
 ## Overview
 - `boker.proto` defines the data strcuture for the communication
 
