@@ -8,16 +8,6 @@ port = 'localhost:8061'
 
 def bidirectional_streaming(stub):
 
-    def request_messages():  
-        for i in range(100):
-            request = msg.BrokerRequest( id= i,
-            sensor1 = i+1.06034923580252875,
-            sensor2 = i+2.06034923580252875,
-            sensor3 = i+3.06034923580252875,
-            sensor4 = i+4.06034923580252875)
-            yield request
-            time.sleep(.1)
-
     def stream_messages():
         csv_filename = "./dataset/sensors.csv"
         with open(csv_filename, "r") as dataset:
@@ -29,10 +19,8 @@ def bidirectional_streaming(stub):
                 sensor3=float(data[3]),
                 sensor4=float(data[4]))
                 yield request
-                time.sleep(.01) 
+                time.sleep(.0001) 
 
-    
-    # response_iterator = stub.BidirectionalStreaming(request_messages())
     response_iterator = stub.BidirectionalStreaming(stream_messages())
 
     for response in response_iterator:

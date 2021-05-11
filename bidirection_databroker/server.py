@@ -18,16 +18,12 @@ class BrokerServiceServicer(Server.BrokerServiceServicer):
                 
         
     def BidirectionalStreaming(self, request_iterator, context):
-        t = Thread(target=self.ProcessRequest(request_iterator))
-        t.start()
+        p1 = Thread(target=self.ProcessRequest(request_iterator))
+        p1.start()
         ## apply some algorithm here on the received data
         self.ProcessRequest(request_iterator)
-
-        yield msg.BrokerResponse(
-            id = 15,
-            prediction = True
-        )
-        t.join()
+        yield msg.BrokerResponse(id = 15, prediction = True)
+        p1.join()
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
