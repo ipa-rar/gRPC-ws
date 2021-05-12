@@ -5,11 +5,13 @@ import grpc
 from generated import broker_pb2 as msg
 from generated import broker_pb2_grpc as Client
 PORT = 'localhost:8061'
+STREAM_RATE  = 0.01
 
 
 def bidirectional_streaming(stub):
 
     def stream_messages():
+        """Server request callback function"""
         csv_filename = "./dataset/sensors.csv"
         with open(csv_filename, "r") as dataset:
             row = csv.reader(dataset, delimiter=",")
@@ -20,13 +22,12 @@ def bidirectional_streaming(stub):
                                             sensor3=float(data[3]),
                                             sensor4=float(data[4]))
                 yield request
-                time.sleep(.001)
+                time.sleep(STREAM_RATE)
 
     response_iterator = stub.BidirectionalStreaming(stream_messages())
 
     for response in response_iterator:
-        print(response.id,
-              response.prediction)
+        print("Server response: ", int(response.id), bool(response.prediction))
 
 
 def main():
