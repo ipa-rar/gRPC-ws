@@ -1,33 +1,35 @@
 from concurrent import futures
 from threading import Thread
+from signal import signal, SIGTERM
 import grpc
 
-from generated import broker_pb2 as msg
-from generated import broker_pb2_grpc as Server
-PORT = 8061
+from databroker_pb2 import BrokerResponse
+import databroker_pb2_grpc
+import config
 
+PORT = config.port
 
-class BrokerServiceServicer(Server.BrokerServiceServicer):
+class BrokerServiceServicer(databroker_pb2_grpc.BrokerServiceServicer):
 
     def BidirectionalStreaming(self, request_iterator, context):
         """Server request callback function"""
         for request in request_iterator:
             print("Client request: ",
-                request.id,
-                request.sensor1,
-                request.sensor2,
-                request.sensor3,
-                request.sensor4)
+                  request.id,
+                  request.sensor1,
+                  request.sensor2,
+                  request.sensor3,
+                  request.sensor4)
             if (request.id % 2) == 0:
-                yield msg.BrokerResponse(id=request.id, prediction=True)
+                yield BrokerResponse(id=request.id, prediction=True)
             else:
-                yield msg.BrokerResponse(id=request.id, prediction=False)
-
+                yield BrokerResponse(id=request.id, prediction=False)
 
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    Server.add_BrokerServiceServicer_to_server(BrokerServiceServicer(), server)
+    databroker_pb2_grpc.add_BrokerServiceServicer_to_server(
+        BrokerServiceServicer(), server)
     print("Starting server. Listening on port : " + str(PORT))
     server.add_insecure_port("[::]:{}".format(PORT))
     server.start()

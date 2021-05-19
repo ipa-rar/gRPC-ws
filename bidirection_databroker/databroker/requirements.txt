@@ -1,6 +1,5 @@
 grpcio
 multithreading
-python-json-config 
 protobuf
 pandas
 numpy

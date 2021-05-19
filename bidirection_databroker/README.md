@@ -15,12 +15,12 @@
 sh generate_src.sh
 ````
 ## Generated class
-### ``broker_pb2.py`` - contains message classes
-- **broker_pb2.Features** for sending response
-- **broker_pb2.Empty** for sending request
-### ``broker_pb2_grpc.py`` - contains server and client classes
-- **broker_pb2_grpc.BidirectionalStreamingServicer** will be used by server
-- **broker_pb2_grpc.BidirectionalStreamingStub** will be used by client
+### ``databroker_pb2.py`` - contains message classes
+- **databroker_pb2.Features** for sending response
+- **databroker_pb2.Empty** for sending request
+### ``databroker_pb2_grpc.py`` - contains server and client classes
+- **databroker_pb2_grpc.BidirectionalStreamingServicer** will be used by server
+- **databroker_pb2_grpc.BidirectionalStreamingStub** will be used by client
 
 ## Server
 - The gRPC server will run on port 8061
@@ -36,4 +36,29 @@ docker run -p 8061:8061 --rm -ti databroker:v2 /bin/bash
 On another terminal run the client
 ````
 python3 client.py
+````
+## Repository structure
+````
+.
+├── client
+│   ├── client.py
+│   ├── config.py
+│   ├── databroker_pb2_grpc.py
+│   ├── databroker_pb2.py
+│   ├── __pycache__
+│   └── requirements.txt
+├── databroker
+│   ├── config.py
+│   ├── databroker_pb2_grpc.py
+│   ├── databroker_pb2.py
+│   ├── dockerfile
+│   ├── __pycache__
+│   ├── requirements.txt
+│   └── server.py
+├── dataset
+│   └── sensors.csv
+├── protobufs
+│   └── databroker.proto
+├── README.md
+└── requirements.txt
 ````
