@@ -62,3 +62,10 @@ python3 client.py
 ├── README.md
 └── requirements.txt
 ````
+## Securing Client Server Communication
+- First we create a self signed certificate using `openssl`. To so that run this command
+````
+sh generate_certificate.sh
+````
+- At this stage, you will have two files: ``server.key`` and ``server.crt``. 
+- On the server side, we will need both these files; on the client side, we will only need the ``server.crt`` file.

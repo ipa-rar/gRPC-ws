@@ -21,6 +21,7 @@ For the ease of getting started with gRPC projects I have created a shell script
 - [Data transmission Client](https://github.com/grpc/grpc/blob/master/examples/python/data_transmission/client.py)
 - [Data transmission Server](https://github.com/grpc/grpc/blob/master/examples/python/data_transmission/server.py)
 - [Best practices for gRPC microservices](https://realpython.com/python-microservices-grpc/#python-microservice-monitoring-with-interceptors)
+- [Adding security and Interceptos](https://www.cloudbees.com/blog/exploring-security-metrics-and-error-handling-with-grpc-in-python/)
 
 
 
