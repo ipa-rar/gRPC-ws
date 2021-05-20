@@ -69,3 +69,6 @@ sh generate_certificate.sh
 ````
 - At this stage, you will have two files: ``server.key`` and ``server.crt``. 
 - On the server side, we will need both these files; on the client side, we will only need the ``server.crt`` file.
+
+## Implementing server side gRPC interceptors
+- Interceptors are custom code that run on servers and clients during a request/response lifecycle.

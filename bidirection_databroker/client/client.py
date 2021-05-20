@@ -40,11 +40,13 @@ class Client():
 
 
 def main():
-    #with open(os.path.join(os.path.split(__file__)[0], 'server.crt')) as f:
+    # with open(os.path.join(os.path.split(__file__)[0], 'server.crt')) as f:
     with open('server.crt') as f:
-        credentials = grpc.ssl_channel_credentials(root_certificates=f.read().encode())
-    
+        credentials = grpc.ssl_channel_credentials(
+            root_certificates=f.read().encode())
+
     Client(config.port, credentials)
+
 
 if __name__ == '__main__':
     try:

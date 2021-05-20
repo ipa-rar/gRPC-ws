@@ -34,12 +34,12 @@ class BrokerServiceServicer(databroker_pb2_grpc.BrokerServiceServicer):
 def main():
     interceptors = [ExceptionToStatusInterceptor()]
     server = grpc.server(
-            ThreadPoolExecutor(max_workers=10),
-            interceptors=interceptors)
+        ThreadPoolExecutor(max_workers=10),
+        interceptors=interceptors)
     databroker_pb2_grpc.add_BrokerServiceServicer_to_server(
-            BrokerServiceServicer(), 
-            server)
-        # read in key and certificate
+        BrokerServiceServicer(),
+        server)
+    # read in key and certificate
     with open(os.path.join(os.path.split(__file__)[0], 'server.key')) as f:
         private_key = f.read().encode()
 
@@ -47,7 +47,8 @@ def main():
         certificate_chain = f.read().encode()
 
     # create server credentials
-    server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
+    server_credentials = grpc.ssl_server_credentials(
+        ((private_key, certificate_chain), ))
     server.add_secure_port(config.port, server_credentials)
 
     print("Starting server. Listening on port : " + str(config.port))
