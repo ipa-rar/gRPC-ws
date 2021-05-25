@@ -5,11 +5,14 @@ from signal import signal, SIGTERM
 import grpc
 from grpc_interceptor import ExceptionToStatusInterceptor
 from grpc_interceptor.exceptions import NotFound
+import logging
 
 from databroker_pb2 import BrokerResponse
 import databroker_pb2_grpc
 import config
 
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 class BrokerServiceServicer(databroker_pb2_grpc.BrokerServiceServicer):
 
@@ -19,7 +22,7 @@ class BrokerServiceServicer(databroker_pb2_grpc.BrokerServiceServicer):
             raise NotFound("Client request is incorrect!")
 
         for request in request_iterator:
-            print("Client request: ",
+            logging.info("Client request: %d %g %g %g %g",
                   request.id,
                   request.sensor1,
                   request.sensor2,
@@ -41,7 +44,7 @@ def main():
         server)
     server.add_insecure_port(config.port)
 
-    print("Starting server. Listening on port : " + str(config.port))
+    logging.info("Starting server. Listening on port : %s", str(config.port))
     server.start()
     server.wait_for_termination()
 
